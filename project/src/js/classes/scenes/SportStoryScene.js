@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export default class SportStoryScene extends Phaser.Scene {
   constructor() {
     super({
@@ -23,7 +24,7 @@ export default class SportStoryScene extends Phaser.Scene {
 
   createBackground() {
     this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
-    this.graphics = this.add.graphics({ fillStyle: { color: 0x29f2d4 } });
+    this.graphics = this.add.graphics({fillStyle: {color: 0x29f2d4}});
     this.graphics.fillRectShape(this.bg);
   }
 

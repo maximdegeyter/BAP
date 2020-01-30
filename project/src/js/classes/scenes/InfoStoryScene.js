@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export default class InfoStoryScene extends Phaser.Scene {
   constructor() {
     super({
@@ -33,7 +34,7 @@ export default class InfoStoryScene extends Phaser.Scene {
 
   createBackground() {
     this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
-    this.graphics = this.add.graphics({ fillStyle: { color: 0x88eafd } });
+    this.graphics = this.add.graphics({fillStyle: {color: 0x88eafd}});
     this.graphics.fillRectShape(this.bg);
   }
 

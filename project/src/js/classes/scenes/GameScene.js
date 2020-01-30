@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super({
@@ -9,5 +10,7 @@ export default class GameScene extends Phaser.Scene {
     console.log(`GameScene INIT`);
   }
 
-  onComplete() {}
+  onComplete() {
+    
+  }
 }

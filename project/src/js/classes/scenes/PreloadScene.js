@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import './../../../assets/next.png';
 
 export default class PreloadScene extends Phaser.Scene {

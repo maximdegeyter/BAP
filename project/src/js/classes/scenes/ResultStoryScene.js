@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export default class ResultStoryScene extends Phaser.Scene {
   constructor() {
     super({
@@ -11,7 +12,7 @@ export default class ResultStoryScene extends Phaser.Scene {
   }
 
   onComplete() {
-    this.scene.start(`game`);
+    this.scene.start(`intro`);
   }
 
   create() {
@@ -23,7 +24,7 @@ export default class ResultStoryScene extends Phaser.Scene {
 
   createBackground() {
     this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
-    this.graphics = this.add.graphics({ fillStyle: { color: 0xfa927c } });
+    this.graphics = this.add.graphics({fillStyle: {color: 0xfa927c}});
     this.graphics.fillRectShape(this.bg);
   }
 

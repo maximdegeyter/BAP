@@ -9,6 +9,7 @@ export default class ResultStoryScene extends Phaser.Scene {
   init() {
     console.log(`Story 3 INIT`);
     this.millis = 15000;
+    this.progressBar;
   }
 
   onComplete() {
@@ -17,15 +18,31 @@ export default class ResultStoryScene extends Phaser.Scene {
 
   create() {
     this.createBackground();
+    this.bars();
     this.nextButton();
     this.previousButton();
     this.setTimer();
+    this.timer();
   }
 
   createBackground() {
     this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
     this.graphics = this.add.graphics({fillStyle: {color: 0xfa927c}});
     this.graphics.fillRectShape(this.bg);
+  }
+
+  bars() {
+    this.progressBar1 = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 80, 16, 48, 4);
+    this.color = this.add.graphics({fillStyle: {color: 0xffffff}});
+    this.color.fillRectShape(this.progressBar1);
+
+    this.progressBar2 = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 24, 16, 48, 4);
+    this.transparentColor = this.add.graphics({fillStyle: {color: 0xffffff}});
+    this.transparentColor.alpha = 0.5;
+    this.color.fillRectShape(this.progressBar2);
+
+    this.progressBar3 = new Phaser.Geom.Rectangle((this.game.config.width / 2) + 32, 16, 48, 4);
+    this.transparentColor.fillRectShape(this.progressBar3);
   }
 
   nextButton() {
@@ -51,5 +68,18 @@ export default class ResultStoryScene extends Phaser.Scene {
       callback: this.onComplete,
       callbackScope: this
     });
+  }
+
+  timer() {
+    this.initialTime = 0;
+    this.progressBar = this.add.graphics();
+    this.time.addEvent({delay: 1, callback: this.onEvent, callbackScope: this, loop: true});
+  }
+
+  onEvent() {
+    this.initialTime += 1;
+    this.progressBar.clear();
+    this.progressBar.fillStyle(0xffffff, 1);
+    this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.053 * this.initialTime, 4);
   }
 }

@@ -23,13 +23,29 @@ export default class GameScene extends Phaser.Scene {
   }
 
   onComplete() {
-
+    this.scene.start(`results`);
   }
 
   create() {
+    this.createBackground();
     this.countDown();
     this.createBreath();
     this.createBreathBar();
+    this.createMeterTxt();
+  }
+
+  createBackground() {
+    this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
+    this.graphics = this.add.graphics({fillStyle: {color: 0x7c48f1}});
+    this.graphics.fillRectShape(this.bg);
+
+    this.water = new Phaser.Geom.Rectangle(24, 24, this.game.config.width - 48, this.game.config.height - 168);
+    this.graphics = this.add.graphics({fillStyle: {color: 0x93d5de}});
+    this.graphics.fillRectShape(this.water);
+    this.stroke = this.add.graphics();
+    this.stroke.lineStyle(4, 0x00000, 100);
+    this.stroke.strokeRect(24, 24, this.game.config.width - 48, this.game.config.height - 168);
+
   }
 
   countDown() {
@@ -67,23 +83,26 @@ export default class GameScene extends Phaser.Scene {
     if (this.raceStarted === true) {
       console.log('race started');
       this.createTimer();
-      this.createClock();
       this.rightArmBtn();
       this.leftArmBtn();
 
-      this.clockEvent = this.time.addEvent({delay: 1000, callback: this.setClockTxt, callbackScope: this});
+      this.clockEvent = this.time.addEvent({delay: 1000, callback: this.clockScore, callbackScope: this});
     }
   }
 
+  clockScore() {
+    console.log('tick');
+  }
+
   rightArmBtn() {
-    this.btn = this.add.image(this.game.config.width - 96, this.game.config.height / 1.25, 'right').setInteractive();
-    this.btn.setScale(2);
+    this.btn = this.add.image(this.game.config.width - 96, this.game.config.height / 1.15, 'right').setInteractive();
+    this.btn.setScale(0.25);
     this.btn.on('pointerdown', this.moveForwardRight, this);
   }
 
   leftArmBtn() {
-    this.prevBtn = this.add.image(96, this.game.config.height / 1.25, 'left').setInteractive();
-    this.prevBtn.setScale(2);
+    this.prevBtn = this.add.image(96, this.game.config.height / 1.15, 'left').setInteractive();
+    this.prevBtn.setScale(0.25);
     this.prevBtn.on('pointerdown', this.moveForwardLeft, this);
   }
 
@@ -120,7 +139,7 @@ export default class GameScene extends Phaser.Scene {
       this,
       Phaser.Math.Between(100, this.game.config.width - 100),
       0,
-      `breath`,
+      `longen`,
       this.breathSpeed
     );
     console.log('breath has been created');
@@ -139,15 +158,20 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createBreathBar() {
-    this.breathBar = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 125, 48, this.breathAmount / 4, 8);
-    this.graphics = this.add.graphics({fillStyle: {color: 0xfcc101}});
+    this.breathBar = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 62.5, 48, this.breathAmount / 8, 16);
+    this.graphics = this.add.graphics({fillStyle: {color: 0xa4f761}});
     this.graphics.fillRectShape(this.breathBar);
   }
 
-  createClock() {
-    this.timeTxt = this.add.text(this.game.config.width - 96, 36, '00:00', {
-      fontSize: 16,
-      fill: `#ffffff`
+  createMeterTxt() {
+    this.txtBackground = new Phaser.Geom.Rectangle(266, 36, 61, 40);
+    this.bgColor = this.add.graphics({fillStyle: {color: 0xffffff}});
+    this.bgColor.fillRectShape(this.txtBackground);
+
+    this.meterTxt = this.add.text(306, 56, `0M`, {
+      fontSize: 24,
+      fill: `#000000`,
+      align: 'right'
     }).setOrigin(0.5);
   }
 
@@ -162,6 +186,12 @@ export default class GameScene extends Phaser.Scene {
     if (this.raceStarted === true && !this.gameOver) {
       this.updateBreath();
       this.updateBreathBar();
+      this.updateMeterTxt();
+      console.log(this.clockEvent.getProgress().toString().substr(0, 4));
+    }
+
+    if (this.currentPos > this.distance - 1 || this.breathAmount < 1) {
+      this.onComplete();
     }
   }
 
@@ -180,8 +210,12 @@ export default class GameScene extends Phaser.Scene {
 
   updateBreathBar() {
     this.graphics.clear();
-    this.breathBar = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 125, 48, this.breathAmount / 4, 8);
-    this.graphics = this.add.graphics({fillStyle: {color: 0xfcc101}});
+    this.breathBar = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 62.5, 48, this.breathAmount / 8, 16);
+    this.graphics = this.add.graphics({fillStyle: {color: 0xa4f761}});
     this.graphics.fillRectShape(this.breathBar);
+  }
+
+  updateMeterTxt() {
+    this.meterTxt.setText(`${this.currentPos}M`);
   }
 }

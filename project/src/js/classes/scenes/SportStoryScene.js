@@ -7,7 +7,7 @@ export default class SportStoryScene extends Phaser.Scene {
   }
 
   init() {
-    console.log(`Story 2 INIT`);
+    console.log(`Story 2 init`);
     this.millis = 15000;
     this.progressBar;
   }

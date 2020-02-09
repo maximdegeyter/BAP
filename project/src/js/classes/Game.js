@@ -5,6 +5,7 @@ import ResultStoryScene from './scenes/ResultStoryScene.js';
 import SportStoryScene from './scenes/SportStoryScene.js';
 import GameIntroScene from './scenes/GameIntroScene.js';
 import GameScene from './scenes/GameScene.js';
+import ResultsScene from './scenes/ResultsScene.js';
 
 class Game extends Phaser.Game {
   constructor() {
@@ -19,7 +20,8 @@ class Game extends Phaser.Game {
         SportStoryScene,
         ResultStoryScene,
         GameIntroScene,
-        GameScene
+        GameScene,
+        ResultsScene
       ],
       url: 'http://www.sporza.be',
       version: '1.0',

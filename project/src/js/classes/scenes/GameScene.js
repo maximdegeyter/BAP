@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import Breath from '../gameobjects/Breath';
+import Player from '../gameobjects/Player';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -9,7 +10,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init() {
-    console.log(`GameScene INIT`);
+    console.log(`GameScene init`);
     this.gameOver = false;
     this.text;
     this.timedEvent;
@@ -18,19 +19,20 @@ export default class GameScene extends Phaser.Scene {
     this.breathSpeed = 1;
     this.distance = 100;
     this.currentPos = 0;
+    this.currentTime = 0;
     this.previousLeft = false;
     this.previousRight = false;
+    this.breathBarGraphics = this.add.graphics();
   }
 
   onComplete() {
-    this.scene.start(`results`);
+    this.scene.start(`results`, {score: this.currentTime});
   }
 
   create() {
     this.createBackground();
     this.countDown();
     this.createBreath();
-    this.createBreathBar();
     this.createMeterTxt();
   }
 
@@ -46,8 +48,11 @@ export default class GameScene extends Phaser.Scene {
     this.stroke.lineStyle(4, 0x00000, 100);
     this.stroke.strokeRect(24, 24, this.game.config.width - 48, this.game.config.height - 168);
 
+    this.ballen = this.add.tileSprite((this.game.config.width / 2) - 24, (this.game.config.height / 2) - 60, this.game.config.width - 48, this.game.config.height - 168, 'ballen');
+
   }
 
+  // aftellen voor het begin van de race
   countDown() {
     this.initialTime = 3;
 
@@ -56,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
       fill: `#ffffff`
     }).setOrigin(0.5);
 
-    //aftellen
+    // elke seconde onEvent() oproepen
     this.timedEvent = this.time.addEvent({delay: 1000, callback: this.onEvent, callbackScope: this, repeat: 2});
   }
 
@@ -75,94 +80,105 @@ export default class GameScene extends Phaser.Scene {
   }
 
   destroyText() {
-    console.log('destroy text');
     this.text.setVisible(false);
   }
 
+  // race start na aftellen
   race() {
     if (this.raceStarted === true) {
       console.log('race started');
-      this.createTimer();
+      this.createSwimmer();
+      this.createBreathGenerator();
       this.rightArmBtn();
       this.leftArmBtn();
 
-      this.clockEvent = this.time.addEvent({delay: 1000, callback: this.clockScore, callbackScope: this});
+      this.clockEvent = this.time.addEvent({delay: 1000, callback: this.clockScore, callbackScope: this, loop: true});
     }
   }
 
   clockScore() {
-    console.log('tick');
+    this.currentTime += 1;
+  }
+
+  createSwimmer() {
+    this.swimmer = new Player(this, this.game.config.width / 2, this.game.config.height / 2.5);
   }
 
   rightArmBtn() {
     this.btn = this.add.image(this.game.config.width - 96, this.game.config.height / 1.15, 'right').setInteractive();
     this.btn.setScale(0.25);
     this.btn.on('pointerdown', this.moveForwardRight, this);
+    this.btn.on('pointerup', this.handlePointerRightBtn, this);
   }
 
   leftArmBtn() {
-    this.prevBtn = this.add.image(96, this.game.config.height / 1.15, 'left').setInteractive();
-    this.prevBtn.setScale(0.25);
-    this.prevBtn.on('pointerdown', this.moveForwardLeft, this);
+    this.leftBtn = this.add.image(96, this.game.config.height / 1.15, 'left').setInteractive();
+    this.leftBtn.setScale(0.25);
+    this.leftBtn.on('pointerdown', this.moveForwardLeft, this);
+    this.leftBtn.on('pointerup', this.handlePointerLeftBtn, this);
+  }
+
+  handlePointerRightBtn() {
+    this.btn.y -= 5;
+  }
+
+  handlePointerLeftBtn() {
+    this.leftBtn.y -= 5;
   }
 
   moveForwardLeft() {
+    this.leftBtn.y += 5;
     if (!this.previousLeft) {
-      this.currentPos += 4;
+      this.currentPos += 2;
+      this.ballen.tilePositionY -= 10;
       this.previousLeft = true;
       this.previousRight = false;
-      console.log(this.currentPos);
+      console.log(`current pos: ${this.currentPos}M`);
     } else {
       this.currentPos += 1;
-      console.log(this.currentPos);
+      this.ballen.tilePositionY -= 5;
+      console.log(`current pos: ${this.currentPos}M`);
     }
   }
 
   moveForwardRight() {
+    this.btn.y += 5;
     if (!this.previousRight) {
-      this.currentPos += 4;
+      this.currentPos += 2;
+      this.ballen.tilePositionY -= 10;
       this.previousRight = true;
       this.previousLeft = false;
-      console.log(this.currentPos);
+      console.log(`current pos: ${this.currentPos}M`);
     } else {
       this.currentPos += 1;
-      console.log(this.currentPos);
+      this.ballen.tilePositionY -= 5;
+      console.log(`current pos: ${this.currentPos}M`);
     }
   }
 
-  setClockTxt() {
-    console.log('tick');
-  }
-
+  // longen
   createBreath() {
-    this.breath = new Breath(
-      this,
-      Phaser.Math.Between(100, this.game.config.width - 100),
-      0,
-      `longen`,
-      this.breathSpeed
-    );
+    this.breath = new Breath(this, Phaser.Math.Between(100, this.game.config.width - 100), 0, this.breathSpeed, this.breathAmount);
     console.log('breath has been created');
-    this.breath.setInteractive();
     this.breath.on('pointerdown', this.breathHit, this);
   }
 
-  // maken van timers in game
-  createTimer() {
+  // het event als je breath raakt
+  breathHit() {
+    this.breathAmount += 200;
+  }
+
+  // creeërt longen om 4-5 seconden
+  createBreathGenerator() {
     this.breathGenerator = this.time.addEvent({
-      delay: 4000,
+      delay: 4500,
       callback: this.createBreath,
       callbackScope: this,
       loop: true
     });
   }
 
-  createBreathBar() {
-    this.breathBar = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 62.5, 48, this.breathAmount / 8, 16);
-    this.graphics = this.add.graphics({fillStyle: {color: 0xa4f761}});
-    this.graphics.fillRectShape(this.breathBar);
-  }
-
+  // progresstext van afstand
   createMeterTxt() {
     this.txtBackground = new Phaser.Geom.Rectangle(266, 36, 61, 40);
     this.bgColor = this.add.graphics({fillStyle: {color: 0xffffff}});
@@ -175,19 +191,11 @@ export default class GameScene extends Phaser.Scene {
     }).setOrigin(0.5);
   }
 
-  // het event als je breath raakt
-  breathHit() {
-    console.log('adem');
-    this.breath.destroy();
-    this.breathAmount += 100;
-  }
-
   update() {
     if (this.raceStarted === true && !this.gameOver) {
       this.updateBreath();
       this.updateBreathBar();
       this.updateMeterTxt();
-      console.log(this.clockEvent.getProgress().toString().substr(0, 4));
     }
 
     if (this.currentPos > this.distance - 1 || this.breathAmount < 1) {
@@ -200,7 +208,7 @@ export default class GameScene extends Phaser.Scene {
       this.breathAmount -= 1;
       this.breath.y += this.breathSpeed;
       if (this.breath.y > this.game.config.height) {
-        this.breath.destroy(true);
+        this.breath.destroy();
         console.log('breath destroyed');
       }
     } else if (this.breathAmount === 0) {
@@ -208,11 +216,12 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
+  // progressbar van longen
   updateBreathBar() {
-    this.graphics.clear();
+    this.breathBarGraphics.clear();
     this.breathBar = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 62.5, 48, this.breathAmount / 8, 16);
-    this.graphics = this.add.graphics({fillStyle: {color: 0xa4f761}});
-    this.graphics.fillRectShape(this.breathBar);
+    this.breathBarGraphics = this.add.graphics({fillStyle: {color: 0xa4f761}});
+    this.breathBarGraphics.fillRectShape(this.breathBar);
   }
 
   updateMeterTxt() {

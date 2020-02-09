@@ -7,7 +7,7 @@ export default class InfoStoryScene extends Phaser.Scene {
   }
 
   init() {
-    console.log(`Story 1 INIT`);
+    console.log(`Story 1 init`);
     this.millis = 15000;
     this.progressBar;
   }
@@ -22,6 +22,7 @@ export default class InfoStoryScene extends Phaser.Scene {
     this.nextButton();
     this.setTimer();
     this.timer();
+    this.test();
   }
 
   createBackground() {
@@ -68,5 +69,10 @@ export default class InfoStoryScene extends Phaser.Scene {
     this.progressBar.clear();
     this.progressBar.fillStyle(0xffffff, 1);
     this.progressBar.fillRect((this.game.config.width / 2) - 80, 16, 0.053 * this.initialTime, 4);
+  }
+
+  test() {
+    //this.vid = this.add.video(0, 0, 'test');
+    //this.vid.play();
   }
 }

@@ -6,9 +6,10 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  init() {
-    console.log(`Results scene`);
-
+  init(data) {
+    console.log(`ResultsScene init`);
+    this.score = data.score;
+    console.log(`Score: ${this.score}`);
   }
 
   onComplete() {

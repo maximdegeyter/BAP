@@ -7,7 +7,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init() {
-    console.log(`Introscene INIT`);
+    console.log(`Introscene init`);
 
   }
 

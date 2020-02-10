@@ -19,14 +19,15 @@ export default class GameScene extends Phaser.Scene {
     this.breathSpeed = 1;
     this.distance = 100;
     this.currentPos = 0;
-    this.currentTime = 0;
+    this.currentMillis = 0;
+    this.currentSeconds = 0;
     this.previousLeft = false;
     this.previousRight = false;
     this.breathBarGraphics = this.add.graphics();
   }
 
   onComplete() {
-    this.scene.start(`results`, {score: this.currentTime});
+    this.scene.start(`results`, {score: `${this.currentSeconds}:${this.currentMillis}`});
   }
 
   create() {
@@ -34,6 +35,10 @@ export default class GameScene extends Phaser.Scene {
     this.countDown();
     this.createBreath();
     this.createMeterTxt();
+  }
+
+  onGameOver() {
+    this.scene.start(`gameover`);
   }
 
   createBackground() {
@@ -92,12 +97,19 @@ export default class GameScene extends Phaser.Scene {
       this.rightArmBtn();
       this.leftArmBtn();
 
-      this.clockEvent = this.time.addEvent({delay: 1000, callback: this.clockScore, callbackScope: this, loop: true});
+      this.clockEvent = this.time.addEvent({delay: 1, callback: this.clockScore, callbackScope: this, loop: true});
     }
   }
 
   clockScore() {
-    this.currentTime += 1;
+    this.currentMillis += 1;
+
+    if (this.currentMillis > 59) {
+      this.currentSeconds += 1;
+      this.currentMillis = 0;
+    }
+
+    console.log(`${this.currentSeconds}:${this.currentMillis}`);
   }
 
   createSwimmer() {
@@ -198,8 +210,12 @@ export default class GameScene extends Phaser.Scene {
       this.updateMeterTxt();
     }
 
-    if (this.currentPos > this.distance - 1 || this.breathAmount < 1) {
+    if (this.currentPos > this.distance - 1) {
       this.onComplete();
+    }
+
+    if (this.gameOver) {
+      this.onGameOver();
     }
   }
 

@@ -20,10 +20,10 @@ export default class InfoStoryScene extends Phaser.Scene {
     this.createBackground();
     this.bars();
     this.nextButton();
-    this.test();
+    //this.test();
     this.setTimer();
     this.timer();
-    
+
   }
 
   createBackground() {

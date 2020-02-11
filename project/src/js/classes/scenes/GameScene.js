@@ -93,7 +93,6 @@ export default class GameScene extends Phaser.Scene {
     if (this.raceStarted === true) {
       console.log('race started');
       this.createSwimmer();
-      this.createBreathGenerator();
       this.rightArmBtn();
       this.leftArmBtn();
 
@@ -173,21 +172,19 @@ export default class GameScene extends Phaser.Scene {
     this.breath = new Breath(this, Phaser.Math.Between(100, this.game.config.width - 100), 0, this.breathSpeed, this.breathAmount);
     console.log('breath has been created');
     this.breath.on('pointerdown', this.breathHit, this);
+
+    this.shape = this.make.graphics();
+    this.shape.fillStyle(0xffffff, 0);
+    this.shape.beginPath();
+    this.shape.fillRect(24, 24, this.game.config.width - 48, this.game.config.height - 168);
+
+    this.mask = this.shape.createGeometryMask();
+    this.breath.setMask(this.mask);
   }
 
   // het event als je breath raakt
   breathHit() {
-    this.breathAmount += 200;
-  }
-
-  // creeërt longen om 4-5 seconden
-  createBreathGenerator() {
-    this.breathGenerator = this.time.addEvent({
-      delay: 4500,
-      callback: this.createBreath,
-      callbackScope: this,
-      loop: true
-    });
+    this.breathAmount += 250;
   }
 
   // progresstext van afstand
@@ -226,6 +223,7 @@ export default class GameScene extends Phaser.Scene {
       if (this.breath.y > this.game.config.height) {
         this.breath.destroy();
         console.log('breath destroyed');
+        this.createBreath();
       }
     } else if (this.breathAmount === 0) {
       this.gameOver = true;

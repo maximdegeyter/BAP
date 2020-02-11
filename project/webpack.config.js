@@ -7,7 +7,7 @@ module.exports = (env, {mode}) => {
   console.log(mode);
   return {
     output: {
-      filename: 'script.js'
+      filename: '[name].[hash].js'
     },
     devServer: {
       overlay: true,

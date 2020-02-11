@@ -112,7 +112,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createSwimmer() {
-    this.swimmer = new Player(this, this.game.config.width / 2, this.game.config.height / 2.5);
+    this.swimmer = new Player(this, this.game.config.width / 2, this.game.config.height / 1.25);
+
+    this.shape = this.make.graphics();
+    this.shape.fillStyle(0xffffff, 0);
+    this.shape.beginPath();
+    this.shape.fillRect(24, 24, this.game.config.width - 48, this.game.config.height - 168);
+
+    this.mask = this.shape.createGeometryMask();
+    this.swimmer.setMask(this.mask);
   }
 
   rightArmBtn() {
@@ -206,6 +214,12 @@ export default class GameScene extends Phaser.Scene {
       this.updateBreath();
       this.updateBreathBar();
       this.updateMeterTxt();
+
+      if (this.currentPos > 80) {
+        this.swimmer.y -= .5;
+      } else if (this.currentPos < 10) {
+        this.swimmer.y -= 1;
+      }
     }
 
     if (this.currentPos > this.distance - 1) {

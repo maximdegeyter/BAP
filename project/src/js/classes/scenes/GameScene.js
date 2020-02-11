@@ -185,6 +185,7 @@ export default class GameScene extends Phaser.Scene {
   // het event als je breath raakt
   breathHit() {
     this.breathAmount += 250;
+    this.time.addEvent({delay: 4000, callback: this.createBreath, callbackScope: this});
   }
 
   // progresstext van afstand

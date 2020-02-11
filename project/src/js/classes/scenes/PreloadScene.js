@@ -6,7 +6,7 @@ import './../../../assets/Zwembad.png';
 import './../../../assets/Longen.png';
 import './../../../assets/Zwemmer.png';
 import './../../../assets/ballen.png';
-//import './../../../assets/test.mp4';
+import './../../../assets/test.mp4';
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -24,7 +24,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`right`, `./assets/Right-knop.png`);
     this.load.image(`zwemmer`, `./assets/Zwemmer.png`);
     this.load.image(`ballen`, `./assets/ballen.png`);
-    //this.load.video(`test`, `./assets/test.mmp4`);
+    this.load.video(`test`, `./assets/test.mmp4`);
   }
 
   onProgress(value) {

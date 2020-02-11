@@ -72,7 +72,7 @@ export default class InfoStoryScene extends Phaser.Scene {
   }
 
   test() {
-    //this.vid = this.add.video(0, 0, 'test');
-    //this.vid.play();
+    this.vid = this.add.video(0, 0, 'test');
+    this.vid.play();
   }
 }

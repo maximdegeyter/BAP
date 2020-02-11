@@ -24,7 +24,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`right`, `./assets/Right-knop.png`);
     this.load.image(`zwemmer`, `./assets/Zwemmer.png`);
     this.load.image(`ballen`, `./assets/ballen.png`);
-    this.load.video(`test`, `./assets/test.mmp4`);
+    this.load.video(`test`, `./assets/test.mp4`);
   }
 
   onProgress(value) {

@@ -51,7 +51,7 @@ export default class ResultStoryScene extends Phaser.Scene {
   }
 
   speelButton() {
-    this.btn = this.add.image(this.game.config.width/2, this.game.config.height - 40, 'btnPieter').setInteractive();
+    this.btn = this.add.image(this.game.config.width/2, this.game.config.height - 60, 'btnPieter').setInteractive();
     this.btn.setScale(0.35);
     this.btn.on('pointerdown', this.startGame, this);
   }
@@ -89,6 +89,6 @@ export default class ResultStoryScene extends Phaser.Scene {
     this.initialTime += 1;
     this.progressBar.clear();
     this.progressBar.fillStyle(0xffffff, 1);
-    this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.053 * this.initialTime, 4);
+    this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.16 * this.initialTime, 4);
   }
 }

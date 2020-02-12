@@ -84,6 +84,6 @@ export default class SportStoryScene extends Phaser.Scene {
     this.initialTime += 1;
     this.progressBar.clear();
     this.progressBar.fillStyle(0xffffff, 1);
-    this.progressBar.fillRect((this.game.config.width / 2) - 24, 16, 0.053 * this.initialTime, 4);
+    this.progressBar.fillRect((this.game.config.width / 2) - 24, 16, 0.16 * this.initialTime, 4);
   }
 }

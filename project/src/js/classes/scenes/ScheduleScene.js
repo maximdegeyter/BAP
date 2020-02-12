@@ -23,6 +23,7 @@ export default class ScheduleScene extends Phaser.Scene {
     this.nextBtn();
     this.prevBtn();
     this.createRecapBtn();
+    this.createMessengerBtn();
   }
 
   createBackground() {
@@ -128,13 +129,19 @@ export default class ScheduleScene extends Phaser.Scene {
   }
 
   createRecapBtn() {
-    this.recapBtn = this.add.image(this.game.config.width / 2, this.game.config.height / 1.5, 'recapBtn');
+    this.recapBtn = this.add.image(this.game.config.width / 2, this.game.config.height / 1.5, 'recapBtn').setInteractive();
     this.recapBtn.setScale(0.3);
     this.recapBtn.on('pointerdown', this.handleClickRecapBtn, this);
   }
 
   handleClickRecapBtn() {
     this.scene.start(`info`);
+  }
+
+  createMessengerBtn() {
+    this.messengerBtn = this.add.image(this.game.config.width / 2, this.game.config.height / 1.25, 'messengerBtn');
+    this.messengerBtn.setScale(0.3);
+    this.messengerBtn.on('pointerdown', this.handleClickRecapBtn, this);
   }
 
   update() {

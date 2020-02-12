@@ -18,6 +18,7 @@ import './../../../assets/progressBar40.png';
 import './../../../assets/progressBar60.png';
 import './../../../assets/progressBar80.png';
 import './../../../assets/progressBar100.png';
+import './../../../assets/btnRecap.png';
 import './../../../assets/textBg.png';
 import './../../../assets/test.mp4';
 
@@ -50,6 +51,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`progressBar80`, `./assets/progressBar80.png`);
     this.load.image(`progressBar100`, `./assets/progressBar100.png`);
     this.load.image(`textBg`, `./assets/textBg.png`);
+    this.load.image(`recapBtn`, `./assets/btnRecap.png`);
     this.load.video(`test`, `./assets/test.mp4`);
   }
 

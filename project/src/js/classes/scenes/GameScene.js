@@ -120,7 +120,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createSwimmer() {
-    this.swimmer = new Player(this, this.game.config.width / 2, this.game.config.height / 1.25);
+    this.swimmer = new Player(this, this.game.config.width / 2, this.game.config.height / 2);
 
     this.shape = this.make.graphics();
     this.shape.fillStyle(0xffffff, 0);
@@ -224,8 +224,6 @@ export default class GameScene extends Phaser.Scene {
 
       if (this.currentPos > 80) {
         this.swimmer.y -= .5;
-      } else if (this.currentPos < 10) {
-        this.swimmer.y -= 1;
       }
     }
 

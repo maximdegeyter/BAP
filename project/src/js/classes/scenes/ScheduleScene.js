@@ -22,6 +22,7 @@ export default class ScheduleScene extends Phaser.Scene {
     this.createDays();
     this.nextBtn();
     this.prevBtn();
+    this.createRecapBtn();
   }
 
   createBackground() {
@@ -110,17 +111,30 @@ export default class ScheduleScene extends Phaser.Scene {
   }
 
   nextBtn() {
-    this.nxtBtn = this.add.image(this.game.config.width - ((this.game.config.width / 7) / 2), 40, 'nxt').setInteractive();
+    this.nxtBtn = this.add.image(this.game.config.width - ((this.game.config.width / 7) / 2), 40, 'next').setInteractive();
+    this.nxtBtn.setScale(0.3);
     this.nxtBtn.on('pointerdown', this.handleClickBtn, this);
   }
 
   prevBtn() {
-    this.nxtBtn = this.add.image((this.game.config.width / 7) / 2, 40, 'nxt').setInteractive();
+    this.nxtBtn = this.add.image((this.game.config.width / 7) / 2, 40, 'next').setInteractive();
+    this.nxtBtn.setScale(0.3);
+    this.nxtBtn.setAngle(180);
     this.nxtBtn.on('pointerdown', this.handleClickBtn, this);
   }
 
   handleClickBtn() {
     this.selectDay = !this.selectDay;
+  }
+
+  createRecapBtn() {
+    this.recapBtn = this.add.image(this.game.config.width / 2, this.game.config.height / 1.5, 'recapBtn');
+    this.recapBtn.setScale(0.3);
+    this.recapBtn.on('pointerdown', this.handleClickRecapBtn, this);
+  }
+
+  handleClickRecapBtn() {
+    this.scene.start(`info`);
   }
 
   update() {

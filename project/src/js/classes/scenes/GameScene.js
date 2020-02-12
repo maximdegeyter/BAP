@@ -55,7 +55,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.ballen = this.add.tileSprite((this.game.config.width / 2) - 24, (this.game.config.height / 2) - 60, this.game.config.width - 48, this.game.config.height - 168, 'ballen');
     this.ballen.setScale(1.1);
-    
+
     this.shape = this.make.graphics();
     this.shape.fillStyle(0xffffff, 0);
     this.shape.beginPath();
@@ -187,7 +187,7 @@ export default class GameScene extends Phaser.Scene {
   createBreath() {
     this.breath = new Breath(this, Phaser.Math.Between(100, this.game.config.width - 100), 0, this.breathSpeed, this.breathAmount);
     console.log('breath has been created');
-    
+
     this.breath.on('pointerdown', this.breathHit, this);
 
     this.shape = this.make.graphics();
@@ -229,8 +229,6 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
-    console.log(this.breath.y);
-    
     if (this.currentPos > this.distance - 1) {
       this.onComplete();
     }

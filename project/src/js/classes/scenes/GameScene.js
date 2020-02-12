@@ -54,7 +54,15 @@ export default class GameScene extends Phaser.Scene {
     this.stroke.strokeRect(24, 24, this.game.config.width - 48, this.game.config.height - 168);
 
     this.ballen = this.add.tileSprite((this.game.config.width / 2) - 24, (this.game.config.height / 2) - 60, this.game.config.width - 48, this.game.config.height - 168, 'ballen');
+    this.ballen.setScale(1.1);
+    
+    this.shape = this.make.graphics();
+    this.shape.fillStyle(0xffffff, 0);
+    this.shape.beginPath();
+    this.shape.fillRect(24, 24, this.game.config.width - 48, this.game.config.height - 168);
 
+    this.mask = this.shape.createGeometryMask();
+    this.ballen.setMask(this.mask);
   }
 
   // aftellen voor het begin van de race
@@ -125,14 +133,14 @@ export default class GameScene extends Phaser.Scene {
 
   rightArmBtn() {
     this.btn = this.add.image(this.game.config.width - 96, this.game.config.height / 1.15, 'right').setInteractive();
-    this.btn.setScale(0.25);
+    this.btn.setScale(0.4);
     this.btn.on('pointerdown', this.moveForwardRight, this);
     this.btn.on('pointerup', this.handlePointerRightBtn, this);
   }
 
   leftArmBtn() {
     this.leftBtn = this.add.image(96, this.game.config.height / 1.15, 'left').setInteractive();
-    this.leftBtn.setScale(0.25);
+    this.leftBtn.setScale(0.4);
     this.leftBtn.on('pointerdown', this.moveForwardLeft, this);
     this.leftBtn.on('pointerup', this.handlePointerLeftBtn, this);
   }
@@ -198,15 +206,13 @@ export default class GameScene extends Phaser.Scene {
 
   // progresstext van afstand
   createMeterTxt() {
-    this.txtBackground = new Phaser.Geom.Rectangle(266, 36, 61, 40);
-    this.bgColor = this.add.graphics({fillStyle: {color: 0xffffff}});
-    this.bgColor.fillRectShape(this.txtBackground);
-
-    this.meterTxt = this.add.text(306, 56, `0M`, {
+    this.txtBackground = this.add.image((this.game.config.width / 2) + 112, 56, 'textBg');
+    this.txtBackground.setScale(0.4);
+    this.meterTxt = this.add.text((this.game.config.width / 2) + 96, 44, `0M`, {
       fontSize: 24,
       fill: `#000000`,
       align: 'right'
-    }).setOrigin(0.5);
+    });
   }
 
   update() {
@@ -247,10 +253,27 @@ export default class GameScene extends Phaser.Scene {
 
   // progressbar van longen
   updateBreathBar() {
-    this.breathBarGraphics.clear();
-    this.breathBar = new Phaser.Geom.Rectangle((this.game.config.width / 2) - 62.5, 48, this.breathAmount / 8, 16);
-    this.breathBarGraphics = this.add.graphics({fillStyle: {color: 0xa4f761}});
-    this.breathBarGraphics.fillRectShape(this.breathBar);
+    if (this.breathAmount > 800) {
+      this.breathBar = this.add.image(this.game.config.width / 2, 56, 'progressBar100');
+    }
+
+    if (this.breathAmount < 50) {
+      this.breathBar = this.add.image(this.game.config.width / 2, 56, 'progressBar0');
+    } else if (this.breathAmount < 100) {
+      this.breathBar = this.add.image(this.game.config.width / 2, 56, 'progressBar10');
+    } else if (this.breathAmount < 200) {
+      this.breathBar = this.add.image(this.game.config.width / 2, 56, 'progressBar20');
+    } else if (this.breathAmount < 400) {
+      this.breathBar = this.add.image(this.game.config.width / 2, 56, 'progressBar40');
+    } else if (this.breathAmount < 600) {
+      this.breathBar = this.add.image(this.game.config.width / 2, 56, 'progressBar60');
+    } else if (this.breathAmount < 800) {
+      this.breathBar = this.add.image(this.game.config.width / 2, 56, 'progressBar80');
+    }
+
+    this.breathBar.setScale(0.4);
+    this.breathBarImage = this.add.image((this.game.config.width / 2) - 64, 56, 'long');
+    this.breathBarImage.setScale(0.4);
   }
 
   updateMeterTxt() {

@@ -11,6 +11,14 @@ import './../../../assets/logo.png';
 import './../../../assets/startBackground.jpg';
 import './../../../assets/startPhoto.png';
 import './../../../assets/playBtn.png';
+import './../../../assets/progressBar0.png';
+import './../../../assets/progressBar10.png';
+import './../../../assets/progressBar20.png';
+import './../../../assets/progressBar40.png';
+import './../../../assets/progressBar60.png';
+import './../../../assets/progressBar80.png';
+import './../../../assets/progressBar100.png';
+import './../../../assets/textBg.png';
 import './../../../assets/test.mp4';
 
 export default class PreloadScene extends Phaser.Scene {
@@ -34,6 +42,14 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`playBtn`, `./assets/playBtn.png`);
     this.load.image(`startBackground`, `./assets/startBackground.jpg`);
     this.load.image(`startPhoto`, `./assets/startPhoto.png`);
+    this.load.image(`progressBar0`, `./assets/progressBar0.png`);
+    this.load.image(`progressBar10`, `./assets/progressBar10.png`);
+    this.load.image(`progressBar20`, `./assets/progressBar20.png`);
+    this.load.image(`progressBar40`, `./assets/progressBar40.png`);
+    this.load.image(`progressBar60`, `./assets/progressBar60.png`);
+    this.load.image(`progressBar80`, `./assets/progressBar80.png`);
+    this.load.image(`progressBar100`, `./assets/progressBar100.png`);
+    this.load.image(`textBg`, `./assets/textBg.png`);
     this.load.video(`test`, `./assets/test.mp4`);
   }
 

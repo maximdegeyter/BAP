@@ -2,6 +2,7 @@
 import './../../../assets/nextBtn.png';
 import './../../../assets/btnLinks.png';
 import './../../../assets/btnRechts.png';
+import './../../../assets/btnPieter.png';
 import './../../../assets/Zwembad.png';
 import './../../../assets/long.png';
 import './../../../assets/zwemmerLinks.png';
@@ -58,6 +59,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`progressBar100`, `./assets/progressBar100.png`);
     this.load.image(`textBg`, `./assets/textBg.png`);
     this.load.image(`recapBtn`, `./assets/btnRecap.png`);
+    this.load.image(`btnPieter`, `./assets/btnPieter.png`);
     this.load.image(`messengerBtn`, `./assets/btnMessenger.png`);
     this.load.video(`vs`, `./assets/vs.mp4`);
     this.load.video(`story1`, `./assets/story-1.mp4`);

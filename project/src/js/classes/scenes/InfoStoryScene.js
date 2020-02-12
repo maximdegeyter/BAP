@@ -20,10 +20,8 @@ export default class InfoStoryScene extends Phaser.Scene {
     this.createBackground();
     this.bars();
     this.nextButton();
-    //this.test();
     this.setTimer();
     this.timer();
-
   }
 
   createBackground() {
@@ -53,11 +51,6 @@ export default class InfoStoryScene extends Phaser.Scene {
     this.btn = this.add.image(this.game.config.width - 24, this.game.config.height / 2, 'next').setInteractive();
     this.btn.setScale(0.5);
     this.btn.on('pointerdown', this.onComplete, this);
-  }
-
-  test() {
-    this.vid = this.add.video(0, 0, 'test');
-    this.vid.play(true);
   }
 
   setTimer() {

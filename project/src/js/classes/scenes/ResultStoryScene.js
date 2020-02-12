@@ -13,13 +13,14 @@ export default class ResultStoryScene extends Phaser.Scene {
   }
 
   onComplete() {
-    this.scene.start(`intro`);
+    this.vid.setPaused(true)
+    console.log('5 seconden zijn gedaan');
   }
 
   create() {
     this.createBackground();
     this.bars();
-    this.nextButton();
+    this.speelButton();
     this.previousButton();
     this.setTimer();
     this.timer();
@@ -49,10 +50,14 @@ export default class ResultStoryScene extends Phaser.Scene {
     this.transparentColor.fillRectShape(this.progressBar3);
   }
 
-  nextButton() {
-    this.btn = this.add.image(this.game.config.width - 24, this.game.config.height / 2, 'next').setInteractive();
-    this.btn.setScale(0.5);
-    this.btn.on('pointerdown', this.onComplete, this);
+  speelButton() {
+    this.btn = this.add.image(this.game.config.width/2, this.game.config.height - 40, 'btnPieter').setInteractive();
+    this.btn.setScale(0.35);
+    this.btn.on('pointerdown', this.startGame, this);
+  }
+
+  startGame() {
+    this.scene.start(`intro`);
   }
 
   previousButton() {

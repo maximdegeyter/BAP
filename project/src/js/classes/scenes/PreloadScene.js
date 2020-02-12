@@ -23,6 +23,7 @@ import './../../../assets/btnMessenger.png';
 import './../../../assets/textBg.png';
 import './../../../assets/Spritesheet.png';
 import './../../../assets/vs.mp4';
+import './../../../assets/story-1.mp4';
 import './../../../assets/story-2.mp4';
 import './../../../assets/story-3.mp4';
 
@@ -59,6 +60,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`recapBtn`, `./assets/btnRecap.png`);
     this.load.image(`messengerBtn`, `./assets/btnMessenger.png`);
     this.load.video(`vs`, `./assets/vs.mp4`);
+    this.load.video(`story1`, `./assets/story-1.mp4`);
     this.load.video(`story2`, `./assets/story-2.mp4`);
     this.load.video(`story3`, `./assets/story-3.mp4`);
   }

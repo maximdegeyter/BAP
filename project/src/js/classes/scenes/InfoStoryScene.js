@@ -30,6 +30,10 @@ export default class InfoStoryScene extends Phaser.Scene {
     this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
     this.graphics = this.add.graphics({fillStyle: {color: 0x7c48f1}});
     this.graphics.fillRectShape(this.bg);
+    this.vid = this.add.video(this.game.config.width / 2, this.game.config.height / 2, 'story1');
+    this.videoScale = Math.min(this.game.config.width / this.vid.width, this.game.config.height / this.vid.height);
+    this.vid.setScale(0.35)
+    this.vid.play(true);
   }
 
   bars() {

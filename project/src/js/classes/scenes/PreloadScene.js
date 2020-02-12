@@ -22,7 +22,8 @@ import './../../../assets/btnRecap.png';
 import './../../../assets/btnMessenger.png';
 import './../../../assets/textBg.png';
 import './../../../assets/Spritesheet.png';
-import './../../../assets/test.mp4';
+import './../../../assets/vs.mp4';
+import './../../../assets/story-3.mp4';
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -56,7 +57,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`textBg`, `./assets/textBg.png`);
     this.load.image(`recapBtn`, `./assets/btnRecap.png`);
     this.load.image(`messengerBtn`, `./assets/btnMessenger.png`);
-    this.load.video(`test`, `./assets/test.mp4`);
+    this.load.video(`vs`, `./assets/vs.mp4`);
+    this.load.video(`story3`, `./assets/story-3.mp4`);
   }
 
   onProgress(value) {

@@ -8,7 +8,6 @@ export default class GameScene extends Phaser.Scene {
 
   init() {
     console.log(`Introscene init`);
-
   }
 
   onComplete() {
@@ -18,6 +17,14 @@ export default class GameScene extends Phaser.Scene {
   create() {
     this.setTimer();
     this.createText();
+    this.playVideo()
+  }
+
+  playVideo(){
+    this.vid = this.add.video(this.game.config.width / 2, this.game.config.height / 2, 'vs');
+    this.videoScale = Math.min(this.game.config.width / this.vid.width, this.game.config.height / this.vid.height);
+    this.vid.setScale(this.videoScale)
+    this.vid.play(true);
   }
 
   setTimer() {

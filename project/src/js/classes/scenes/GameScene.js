@@ -121,6 +121,20 @@ export default class GameScene extends Phaser.Scene {
 
   createSwimmer() {
     this.swimmer = new Player(this, this.game.config.width / 2, this.game.config.height / 1.25);
+    
+    this.anims.create({
+      key: 'links',
+      frames: this.anims.generateFrameNumbers('zwemmer', { start: 0, end: 2 }),
+      frameRate: 10,
+      repeat: 0
+    });
+
+    this.anims.create({
+    key: 'rechts',
+    frames: this.anims.generateFrameNumbers('zwemmer', { start: 3, end: 7 }),
+    frameRate: 10,
+    repeat: 0
+    });
 
     this.shape = this.make.graphics();
     this.shape.fillStyle(0xffffff, 0);
@@ -155,6 +169,7 @@ export default class GameScene extends Phaser.Scene {
 
   moveForwardLeft() {
     this.leftBtn.y += 5;
+    this.swimmer.anims.play('links', true);
     if (!this.previousLeft) {
       this.currentPos += 2;
       this.ballen.tilePositionY -= 10;
@@ -170,6 +185,7 @@ export default class GameScene extends Phaser.Scene {
 
   moveForwardRight() {
     this.btn.y += 5;
+    this.swimmer.anims.play('rechts', true);
     if (!this.previousRight) {
       this.currentPos += 2;
       this.ballen.tilePositionY -= 10;

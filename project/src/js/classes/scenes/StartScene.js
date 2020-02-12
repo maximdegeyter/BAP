@@ -19,7 +19,11 @@ export default class StartScene extends Phaser.Scene {
     this.createLogo();
     this.createPlayBtn();
     this.createStartPhoto();
+    this.addZwemmer();
   }
+
+  addZwemmer() {
+  } 
 
   createBackground() {
     this.bg = this.add.image(this.game.config.width / 2, this.game.config.height / 2, `startBackground`).setScale(0.5);

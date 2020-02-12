@@ -1,11 +1,16 @@
 /* eslint-disable no-undef */
-import './../../../assets/next.png';
-import './../../../assets/Left-knop.png';
-import './../../../assets/Right-knop.png';
+import './../../../assets/nextBtn.png';
+import './../../../assets/btnLinks.png';
+import './../../../assets/btnRechts.png';
 import './../../../assets/Zwembad.png';
-import './../../../assets/Longen.png';
-import './../../../assets/Zwemmer.png';
+import './../../../assets/long.png';
+import './../../../assets/zwemmerLinks.png';
+import './../../../assets/zwemmerRechts.png';
 import './../../../assets/ballen.png';
+import './../../../assets/logo.png';
+import './../../../assets/startBackground.jpg';
+import './../../../assets/startPhoto.png';
+import './../../../assets/playBtn.png';
 import './../../../assets/test.mp4';
 
 export default class PreloadScene extends Phaser.Scene {
@@ -18,12 +23,17 @@ export default class PreloadScene extends Phaser.Scene {
     this.preloader = this.add.graphics();
     this.load.on(`progress`, this.onProgress, this);
     this.load.on(`complete`, this.onComplete, this);
-    this.load.image(`next`, `./assets/next.png`);
-    this.load.image(`longen`, `./assets/Longen.png`);
-    this.load.image(`left`, `./assets/Left-knop.png`);
-    this.load.image(`right`, `./assets/Right-knop.png`);
-    this.load.image(`zwemmer`, `./assets/Zwemmer.png`);
+    this.load.image(`next`, `./assets/nextBtn.png`);
+    this.load.image(`long`, `./assets/long.png`);
+    this.load.image(`left`, `./assets/btnLinks.png`);
+    this.load.image(`right`, `./assets/btnRechts.png`);
+    this.load.image(`zwemmerLinks`, `./assets/zwemmerLinks.png`);
+    this.load.image(`zwemmerRechts`, `./assets/zwemmerRechts.png`);
     this.load.image(`ballen`, `./assets/ballen.png`);
+    this.load.image(`logo`, `./assets/logo.png`);
+    this.load.image(`playBtn`, `./assets/playBtn.png`);
+    this.load.image(`startBackground`, `./assets/startBackground.jpg`);
+    this.load.image(`startPhoto`, `./assets/startPhoto.png`);
     this.load.video(`test`, `./assets/test.mp4`);
   }
 
@@ -41,7 +51,7 @@ export default class PreloadScene extends Phaser.Scene {
 
   onComplete() {
     this.preloader.destroy();
-    this.scene.start(`info`);
+    this.scene.start(`start`);
   }
 
   create() {}

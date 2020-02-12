@@ -21,6 +21,7 @@ export default class ScheduleScene extends Phaser.Scene {
     this.createSelectedDay();
     this.createDays();
     this.nextBtn();
+    this.prevBtn();
   }
 
   createBackground() {
@@ -110,6 +111,11 @@ export default class ScheduleScene extends Phaser.Scene {
 
   nextBtn() {
     this.nxtBtn = this.add.image(this.game.config.width - ((this.game.config.width / 7) / 2), 40, 'nxt').setInteractive();
+    this.nxtBtn.on('pointerdown', this.handleClickBtn, this);
+  }
+
+  prevBtn() {
+    this.nxtBtn = this.add.image((this.game.config.width / 7) / 2, 40, 'nxt').setInteractive();
     this.nxtBtn.on('pointerdown', this.handleClickBtn, this);
   }
 

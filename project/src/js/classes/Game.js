@@ -8,6 +8,7 @@ import GameScene from './scenes/GameScene.js';
 import ResultsScene from './scenes/ResultsScene.js';
 import GameOverScene from './scenes/GameOverScene.js';
 import ScheduleScene from './scenes/ScheduleScene.js';
+import StartScene from './scenes/StartScene.js';
 
 class Game extends Phaser.Game {
   constructor() {
@@ -22,6 +23,7 @@ class Game extends Phaser.Game {
       title: 'Bachelorproef',
       scene: [
         PreloadScene,
+        StartScene,
         InfoStoryScene,
         SportStoryScene,
         ResultStoryScene,

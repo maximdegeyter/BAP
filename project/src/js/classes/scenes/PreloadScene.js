@@ -23,6 +23,7 @@ import './../../../assets/btnMessenger.png';
 import './../../../assets/textBg.png';
 import './../../../assets/Spritesheet.png';
 import './../../../assets/vs.mp4';
+import './../../../assets/story-2.mp4';
 import './../../../assets/story-3.mp4';
 
 export default class PreloadScene extends Phaser.Scene {
@@ -58,18 +59,19 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`recapBtn`, `./assets/btnRecap.png`);
     this.load.image(`messengerBtn`, `./assets/btnMessenger.png`);
     this.load.video(`vs`, `./assets/vs.mp4`);
+    this.load.video(`story2`, `./assets/story-2.mp4`);
     this.load.video(`story3`, `./assets/story-3.mp4`);
   }
 
   onProgress(value) {
     console.log(`Loading: ${Math.round(value * 100)}%`);
     this.preloader.clear();
-    this.preloader.fillStyle(0xff0000, 1);
+    this.preloader.fillStyle(0x7c48f1, 1);
     this.preloader.fillRect(
       0,
       this.game.config.height / 2,
       this.game.config.width * value,
-      5
+      10
     );
   }
 

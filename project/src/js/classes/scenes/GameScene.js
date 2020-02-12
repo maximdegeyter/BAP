@@ -187,6 +187,7 @@ export default class GameScene extends Phaser.Scene {
   createBreath() {
     this.breath = new Breath(this, Phaser.Math.Between(100, this.game.config.width - 100), 0, this.breathSpeed, this.breathAmount);
     console.log('breath has been created');
+    
     this.breath.on('pointerdown', this.breathHit, this);
 
     this.shape = this.make.graphics();
@@ -228,6 +229,8 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
+    console.log(this.breath.y);
+    
     if (this.currentPos > this.distance - 1) {
       this.onComplete();
     }

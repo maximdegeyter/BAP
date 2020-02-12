@@ -23,13 +23,13 @@ export default class GameScene extends Phaser.Scene {
   playVideo(){
     this.vid = this.add.video(this.game.config.width / 2, this.game.config.height / 2, 'vs');
     this.videoScale = Math.min(this.game.config.width / this.vid.width, this.game.config.height / this.vid.height);
-    this.vid.setScale(this.videoScale)
+    this.vid.setScale(0.35)
     this.vid.play(true);
   }
 
   setTimer() {
     this.timedEvent = this.time.addEvent({
-      delay: 5000,
+      delay: 4050,
       callback: this.onComplete,
       callbackScope: this
     });

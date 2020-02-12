@@ -8,7 +8,7 @@ export default class ResultStoryScene extends Phaser.Scene {
 
   init() {
     console.log(`Story 3 init`);
-    this.millis = 15000;
+    this.millis = 5000;
     this.progressBar;
   }
 

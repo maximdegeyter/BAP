@@ -5,6 +5,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //
     scene.add.existing(this);
     scene.physics.add.existing(this);
+
     //
     this.setScale(0.25);
   }

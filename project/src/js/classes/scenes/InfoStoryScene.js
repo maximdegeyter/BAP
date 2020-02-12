@@ -8,7 +8,7 @@ export default class InfoStoryScene extends Phaser.Scene {
 
   init() {
     console.log(`Story 1 init`);
-    this.millis = 15000;
+    this.millis = 5000;
     this.progressBar;
   }
 
@@ -20,7 +20,7 @@ export default class InfoStoryScene extends Phaser.Scene {
     this.createBackground();
     this.bars();
     this.nextButton();
-    this.test();
+    //this.test();
     this.setTimer();
     this.timer();
     

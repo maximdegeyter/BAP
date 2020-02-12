@@ -113,7 +113,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createSwimmer() {
-    this.swimmer = new Player(this, this.game.config.width / 2, this.game.config.height / 2.5);
+    this.swimmer = new Player(this, this.game.config.width / 3, this.game.config.height / 3);
   }
 
   rightArmBtn() {
@@ -172,6 +172,7 @@ export default class GameScene extends Phaser.Scene {
   createBreath() {
     this.breath = new Breath(this, Phaser.Math.Between(100, this.game.config.width - 100), 0, this.breathSpeed, this.breathAmount);
     console.log('breath has been created');
+    
     this.breath.on('pointerdown', this.breathHit, this);
   }
 
@@ -183,7 +184,7 @@ export default class GameScene extends Phaser.Scene {
   // creeërt longen om 4-5 seconden
   createBreathGenerator() {
     this.breathGenerator = this.time.addEvent({
-      delay: 4500,
+      delay: 6000,
       callback: this.createBreath,
       callbackScope: this,
       loop: true
@@ -210,6 +211,8 @@ export default class GameScene extends Phaser.Scene {
       this.updateMeterTxt();
     }
 
+    console.log(this.breath.y);
+    
     if (this.currentPos > this.distance - 1) {
       this.onComplete();
     }

@@ -1,4 +1,3 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -22,17 +21,6 @@ module.exports = (env, {mode}) => {
           use: {
             loader: 'babel-loader'
           }
-        },
-        {
-          test: /\.html$/,
-          use: [
-            {
-              loader: 'html-srcsets-loader',
-              options: {
-                attrs: [':src', ':srcset']
-              }
-            }
-          ]
         },
         {
           test: /\.(jpe?g|png|svg|webp|mp4)$/,
@@ -68,12 +56,8 @@ module.exports = (env, {mode}) => {
       ]
     },
     plugins: [
-      new HtmlWebPackPlugin({
-        template: './src/index.html',
-        filename: './index.html'
-      }),
       new MiniCssExtractPlugin({
-        filename: 'style.[contenthash].css'
+        filename: 'style.css'
       }),
       new OptimizeCSSAssetsPlugin(),
       new webpack.HotModuleReplacementPlugin()

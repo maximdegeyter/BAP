@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 export default class Breath extends Phaser.Physics.Arcade.Image {
   constructor(scene, x, y, speed, amount) {
-    super(scene, x, y, `longen`);
+    super(scene, x, y, `long`);
     this.speed = speed;
     this.amount = amount;
 

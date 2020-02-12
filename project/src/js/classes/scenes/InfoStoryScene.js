@@ -23,7 +23,7 @@ export default class InfoStoryScene extends Phaser.Scene {
     //this.test();
     this.setTimer();
     this.timer();
-    
+
   }
 
   createBackground() {
@@ -52,7 +52,7 @@ export default class InfoStoryScene extends Phaser.Scene {
   }
 
   test() {
-    this.vid = this.add.video(0,0,'test');
+    this.vid = this.add.video(0, 0, 'test');
     this.vid.play(true);
   }
 

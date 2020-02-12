@@ -7,6 +7,8 @@ import GameIntroScene from './scenes/GameIntroScene.js';
 import GameScene from './scenes/GameScene.js';
 import ResultsScene from './scenes/ResultsScene.js';
 import GameOverScene from './scenes/GameOverScene.js';
+import ScheduleScene from './scenes/ScheduleScene.js';
+import StartScene from './scenes/StartScene.js';
 
 class Game extends Phaser.Game {
   constructor() {
@@ -14,16 +16,22 @@ class Game extends Phaser.Game {
       type: Phaser.AUTO,
       width: 375,
       height: 667,
+      scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+      },
       title: 'Bachelorproef',
       scene: [
         PreloadScene,
+        StartScene,
         InfoStoryScene,
         SportStoryScene,
         ResultStoryScene,
         GameIntroScene,
         GameScene,
         ResultsScene,
-        GameOverScene
+        GameOverScene,
+        ScheduleScene
       ],
       url: 'http://www.sporza.be',
       version: '1.0',

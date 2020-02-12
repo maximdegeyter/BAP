@@ -13,11 +13,13 @@ export default class ResultsScene extends Phaser.Scene {
   }
 
   onComplete() {
+    this.scene.start(`schedule`);
   }
 
   create() {
     this.createYourScore();
     this.createPieterScore();
+    this.createScheduleBtn();
   }
 
   createYourScore() {
@@ -38,5 +40,11 @@ export default class ResultsScene extends Phaser.Scene {
       align: `center`,
       lineSpacing: 1.5
     }).setOrigin(0.5);
+  }
+
+  createScheduleBtn() {
+    this.btn = this.add.image(this.game.config.width - 24, this.game.config.height / 2, 'next').setInteractive();
+    this.btn.setScale(0.5);
+    this.btn.on('pointerdown', this.onComplete, this);
   }
 }

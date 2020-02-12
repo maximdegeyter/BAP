@@ -19,6 +19,7 @@ import './../../../assets/progressBar60.png';
 import './../../../assets/progressBar80.png';
 import './../../../assets/progressBar100.png';
 import './../../../assets/textBg.png';
+import './../../../assets/Spritesheet.png';
 import './../../../assets/test.mp4';
 
 export default class PreloadScene extends Phaser.Scene {
@@ -35,6 +36,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image(`long`, `./assets/long.png`);
     this.load.image(`left`, `./assets/btnLinks.png`);
     this.load.image(`right`, `./assets/btnRechts.png`);
+    this.load.spritesheet(`zwemmer`, `./assets/Spritesheet.png`, { frameWidth: 289, frameHeight: 333 })
     this.load.image(`zwemmerLinks`, `./assets/zwemmerLinks.png`);
     this.load.image(`zwemmerRechts`, `./assets/zwemmerRechts.png`);
     this.load.image(`ballen`, `./assets/ballen.png`);

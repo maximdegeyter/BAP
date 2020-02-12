@@ -14,6 +14,7 @@ export default class ResultStoryScene extends Phaser.Scene {
 
   onComplete() {
     this.vid.setPaused(true)
+    this.shouldUpdate = false;
     console.log('5 seconden zijn gedaan');
   }
 
@@ -24,6 +25,7 @@ export default class ResultStoryScene extends Phaser.Scene {
     this.previousButton();
     this.setTimer();
     this.timer();
+    this.shouldUpdate = true;
   }
 
   createBackground() {
@@ -83,12 +85,19 @@ export default class ResultStoryScene extends Phaser.Scene {
     this.initialTime = 0;
     this.progressBar = this.add.graphics();
     this.time.addEvent({delay: 1, callback: this.onEvent, callbackScope: this, loop: true});
+    //this.time.addEvent({delay: 5, callback: this.removeTimer, callbackScope: this, loop: false});
+  }
+
+  removeTimer() {
+    this.time.remove(this.onEvent)
   }
 
   onEvent() {
     this.initialTime += 1;
-    this.progressBar.clear();
-    this.progressBar.fillStyle(0xffffff, 1);
-    this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.16 * this.initialTime, 4);
+    if (this.shouldUpdate){
+      this.progressBar.clear();
+      this.progressBar.fillStyle(0xffffff, 1);
+      this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.16 * this.initialTime, 4);
+    }
   }
 }

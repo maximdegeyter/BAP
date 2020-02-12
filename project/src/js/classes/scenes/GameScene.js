@@ -131,7 +131,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.anims.create({
     key: 'rechts',
-    frames: this.anims.generateFrameNumbers('zwemmer', { start: 3, end: 7 }),
+    frames: this.anims.generateFrameNumbers('zwemmer', { start: 3, end: 6 }),
     frameRate: 10,
     repeat: 0
     });

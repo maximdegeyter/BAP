@@ -16,7 +16,7 @@ export default class GameScene extends Phaser.Scene {
     this.timedEvent;
     this.raceStarted = false;
     this.breathAmount = 1000;
-    this.breathSpeed = 1;
+    this.breathSpeed = 3;
     this.distance = 100;
     this.currentPos = 0;
     this.currentMillis = 0;
@@ -171,13 +171,13 @@ export default class GameScene extends Phaser.Scene {
     this.leftBtn.y += 5;
     this.swimmer.anims.play('links', true);
     if (!this.previousLeft) {
-      this.currentPos += 2;
+      this.currentPos += 1;
       this.ballen.tilePositionY -= 10;
       this.previousLeft = true;
       this.previousRight = false;
       console.log(`current pos: ${this.currentPos}M`);
     } else {
-      this.currentPos += 1;
+      this.currentPos += 0.5;
       this.ballen.tilePositionY -= 5;
       console.log(`current pos: ${this.currentPos}M`);
     }
@@ -187,13 +187,13 @@ export default class GameScene extends Phaser.Scene {
     this.btn.y += 5;
     this.swimmer.anims.play('rechts', true);
     if (!this.previousRight) {
-      this.currentPos += 2;
+      this.currentPos += 1;
       this.ballen.tilePositionY -= 10;
       this.previousRight = true;
       this.previousLeft = false;
       console.log(`current pos: ${this.currentPos}M`);
     } else {
-      this.currentPos += 1;
+      this.currentPos += 0.5;
       this.ballen.tilePositionY -= 5;
       console.log(`current pos: ${this.currentPos}M`);
     }
@@ -217,8 +217,8 @@ export default class GameScene extends Phaser.Scene {
 
   // het event als je breath raakt
   breathHit() {
-    this.breathAmount += 250;
-    this.time.addEvent({delay: 4000, callback: this.createBreath, callbackScope: this});
+    this.breathAmount = 1000;
+    this.time.addEvent({delay: 1000, callback: this.createBreath, callbackScope: this});
   }
 
   // progresstext van afstand
@@ -254,7 +254,7 @@ export default class GameScene extends Phaser.Scene {
 
   updateBreath() {
     if (this.breathAmount !== 0) {
-      this.breathAmount -= 1;
+      this.breathAmount -= 4;
       this.breath.y += this.breathSpeed;
       if (this.breath.y > this.game.config.height) {
         this.breath.destroy();
@@ -292,6 +292,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   updateMeterTxt() {
-    this.meterTxt.setText(`${this.currentPos}M`);
+    this.meterTxt.setText(`${this.distance - this.currentPos}M`);
   }
 }

@@ -13,22 +13,29 @@ export default class ResultStoryScene extends Phaser.Scene {
   }
 
   onComplete() {
-    this.scene.start(`intro`);
+    this.vid.setPaused(true)
+    this.shouldUpdate = false;
+    console.log('5 seconden zijn gedaan');
   }
 
   create() {
     this.createBackground();
     this.bars();
-    this.nextButton();
+    this.speelButton();
     this.previousButton();
     this.setTimer();
     this.timer();
+    this.shouldUpdate = true;
   }
 
   createBackground() {
     this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
     this.graphics = this.add.graphics({fillStyle: {color: 0x7c48f1}});
     this.graphics.fillRectShape(this.bg);
+    this.vid = this.add.video(this.game.config.width / 2, this.game.config.height / 2, 'story3');
+    this.videoScale = Math.min(this.game.config.width / this.vid.width, this.game.config.height / this.vid.height);
+    this.vid.setScale(0.35)
+    this.vid.play(true);
   }
 
   bars() {
@@ -45,10 +52,14 @@ export default class ResultStoryScene extends Phaser.Scene {
     this.transparentColor.fillRectShape(this.progressBar3);
   }
 
-  nextButton() {
-    this.btn = this.add.image(this.game.config.width - 24, this.game.config.height / 2, 'next').setInteractive();
-    this.btn.setScale(0.5);
-    this.btn.on('pointerdown', this.onComplete, this);
+  speelButton() {
+    this.btn = this.add.image(this.game.config.width/2, this.game.config.height - 60, 'btnPieter').setInteractive();
+    this.btn.setScale(0.35);
+    this.btn.on('pointerdown', this.startGame, this);
+  }
+
+  startGame() {
+    this.scene.start(`intro`);
   }
 
   previousButton() {
@@ -74,12 +85,19 @@ export default class ResultStoryScene extends Phaser.Scene {
     this.initialTime = 0;
     this.progressBar = this.add.graphics();
     this.time.addEvent({delay: 1, callback: this.onEvent, callbackScope: this, loop: true});
+    //this.time.addEvent({delay: 5, callback: this.removeTimer, callbackScope: this, loop: false});
+  }
+
+  removeTimer() {
+    this.time.remove(this.onEvent)
   }
 
   onEvent() {
     this.initialTime += 1;
-    this.progressBar.clear();
-    this.progressBar.fillStyle(0xffffff, 1);
-    this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.053 * this.initialTime, 4);
+    if (this.shouldUpdate){
+      this.progressBar.clear();
+      this.progressBar.fillStyle(0xffffff, 1);
+      this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.16 * this.initialTime, 4);
+    }
   }
 }

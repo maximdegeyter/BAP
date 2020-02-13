@@ -29,6 +29,10 @@ export default class SportStoryScene extends Phaser.Scene {
     this.bg = new Phaser.Geom.Rectangle(0, 0, this.game.config.width, this.game.config.height);
     this.graphics = this.add.graphics({fillStyle: {color: 0x7c48f1}});
     this.graphics.fillRectShape(this.bg);
+    this.vid = this.add.video(this.game.config.width / 2, this.game.config.height / 2, 'story2');
+    this.videoScale = Math.min(this.game.config.width / this.vid.width, this.game.config.height / this.vid.height);
+    this.vid.setScale(0.35)
+    this.vid.play(true);
   }
 
   bars() {
@@ -80,6 +84,6 @@ export default class SportStoryScene extends Phaser.Scene {
     this.initialTime += 1;
     this.progressBar.clear();
     this.progressBar.fillStyle(0xffffff, 1);
-    this.progressBar.fillRect((this.game.config.width / 2) - 24, 16, 0.053 * this.initialTime, 4);
+    this.progressBar.fillRect((this.game.config.width / 2) - 24, 16, 0.16 * this.initialTime, 4);
   }
 }

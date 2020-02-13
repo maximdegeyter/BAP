@@ -31,7 +31,7 @@ export default class SportStoryScene extends Phaser.Scene {
     this.graphics.fillRectShape(this.bg);
     this.vid = this.add.video(this.game.config.width / 2, this.game.config.height / 2, 'story2');
     this.videoScale = Math.min(this.game.config.width / this.vid.width, this.game.config.height / this.vid.height);
-    this.vid.setScale(0.35)
+    this.vid.setScale(0.35);
     this.vid.play(true);
   }
 

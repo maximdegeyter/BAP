@@ -13,7 +13,7 @@ export default class ResultStoryScene extends Phaser.Scene {
   }
 
   onComplete() {
-    this.vid.setPaused(true)
+    this.vid.setPaused(true);
     this.shouldUpdate = false;
     console.log('5 seconden zijn gedaan');
   }
@@ -34,7 +34,7 @@ export default class ResultStoryScene extends Phaser.Scene {
     this.graphics.fillRectShape(this.bg);
     this.vid = this.add.video(this.game.config.width / 2, this.game.config.height / 2, 'story3');
     this.videoScale = Math.min(this.game.config.width / this.vid.width, this.game.config.height / this.vid.height);
-    this.vid.setScale(0.35)
+    this.vid.setScale(0.35);
     this.vid.play(true);
   }
 
@@ -53,7 +53,7 @@ export default class ResultStoryScene extends Phaser.Scene {
   }
 
   speelButton() {
-    this.btn = this.add.image(this.game.config.width/2, this.game.config.height - 60, 'btnPieter').setInteractive();
+    this.btn = this.add.image(this.game.config.width / 2, this.game.config.height - 60, 'btnPieter').setInteractive();
     this.btn.setScale(0.35);
     this.btn.on('pointerdown', this.startGame, this);
   }
@@ -89,15 +89,19 @@ export default class ResultStoryScene extends Phaser.Scene {
   }
 
   removeTimer() {
-    this.time.remove(this.onEvent)
+    this.time.remove(this.onEvent);
   }
 
   onEvent() {
     this.initialTime += 1;
-    if (this.shouldUpdate){
+    if (this.shouldUpdate) {
       this.progressBar.clear();
       this.progressBar.fillStyle(0xffffff, 1);
       this.progressBar.fillRect((this.game.config.width / 2) + 32, 16, 0.16 * this.initialTime, 4);
     }
+  }
+
+  update() {
+    console.log('ik ben aan het spelen');
   }
 }

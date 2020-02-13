@@ -16,8 +16,8 @@ export default class GameScene extends Phaser.Scene {
     this.timedEvent;
     this.raceStarted = false;
     this.breathAmount = 1000;
-    this.breathSpeed = 3;
-    this.distance = 100;
+    this.breathSpeed = 4;
+    this.distance = 1000;
     this.currentPos = 0;
     this.currentMillis = 0;
     this.currentSeconds = 0;
@@ -35,6 +35,7 @@ export default class GameScene extends Phaser.Scene {
     this.countDown();
     this.createBreath();
     this.createMeterTxt();
+    this.createPlayerControls();
   }
 
   onGameOver() {
@@ -65,11 +66,15 @@ export default class GameScene extends Phaser.Scene {
     this.ballen.setMask(this.mask);
   }
 
+  createPlayerControls() {
+    this.keyboard = this.input.keyboard.createCursorKeys();
+  }
+
   // aftellen voor het begin van de race
   countDown() {
     this.initialTime = 3;
 
-    this.text = this.add.text(this.game.config.width / 2, this.game.config.height / 2, `${this.initialTime}`, {
+    this.text = this.add.text(this.game.config.width / 2, this.game.config.height / 1.15, `${this.initialTime}`, {
       fontSize: 48,
       fill: `#ffffff`
     }).setOrigin(0.5);
@@ -85,8 +90,7 @@ export default class GameScene extends Phaser.Scene {
       this.text.setText(`${this.initialTime}`);
     } else {
       //begin race als er afgeteld is
-      this.text.setText(`Go`);
-      this.time.addEvent({delay: 1000, callback: this.destroyText, callbackScope: this});
+      this.destroyText();
       this.raceStarted = true;
       this.race();
     }
@@ -169,15 +173,16 @@ export default class GameScene extends Phaser.Scene {
 
   moveForwardLeft() {
     this.leftBtn.y += 5;
+    this.breathAmount -= 10;
     this.swimmer.anims.play('links', true);
     if (!this.previousLeft) {
-      this.currentPos += 1;
+      this.currentPos += 5;
       this.ballen.tilePositionY -= 10;
       this.previousLeft = true;
       this.previousRight = false;
       console.log(`current pos: ${this.currentPos}M`);
     } else {
-      this.currentPos += 0.5;
+      this.currentPos += 1;
       this.ballen.tilePositionY -= 5;
       console.log(`current pos: ${this.currentPos}M`);
     }
@@ -185,15 +190,16 @@ export default class GameScene extends Phaser.Scene {
 
   moveForwardRight() {
     this.btn.y += 5;
+    this.breathAmount -= 10;
     this.swimmer.anims.play('rechts', true);
     if (!this.previousRight) {
-      this.currentPos += 1;
+      this.currentPos += 5;
       this.ballen.tilePositionY -= 10;
       this.previousRight = true;
       this.previousLeft = false;
       console.log(`current pos: ${this.currentPos}M`);
     } else {
-      this.currentPos += 0.5;
+      this.currentPos += 1;
       this.ballen.tilePositionY -= 5;
       console.log(`current pos: ${this.currentPos}M`);
     }
@@ -201,7 +207,7 @@ export default class GameScene extends Phaser.Scene {
 
   // longen
   createBreath() {
-    this.breath = new Breath(this, Phaser.Math.Between(100, this.game.config.width - 100), 0, this.breathSpeed, this.breathAmount);
+    this.breath = new Breath(this, Phaser.Math.Between(100, this.game.config.width - 100), 0);
     console.log('breath has been created');
 
     this.breath.on('pointerdown', this.breathHit, this);
@@ -217,15 +223,16 @@ export default class GameScene extends Phaser.Scene {
 
   // het event als je breath raakt
   breathHit() {
+    this.breath.destroy();
     this.breathAmount = 1000;
-    this.time.addEvent({delay: 1000, callback: this.createBreath, callbackScope: this});
+    this.time.addEvent({delay: 1500, callback: this.createBreath, callbackScope: this, repeat: 0});
   }
 
   // progresstext van afstand
   createMeterTxt() {
     this.txtBackground = this.add.image((this.game.config.width / 2) + 112, 56, 'textBg');
     this.txtBackground.setScale(0.4);
-    this.meterTxt = this.add.text((this.game.config.width / 2) + 96, 44, `0M`, {
+    this.meterTxt = this.add.text((this.game.config.width / 2) + 90, 44, `0M`, {
       fontSize: 24,
       fill: `#000000`,
       align: 'right'
@@ -237,32 +244,28 @@ export default class GameScene extends Phaser.Scene {
       this.updateBreath();
       this.updateBreathBar();
       this.updateMeterTxt();
-
-      if (this.currentPos > 80) {
+      this.updatePlayerControls();
+      if (this.currentPos > 800) {
         this.swimmer.y -= .5;
+      }
+      if (this.breath.y === this.game.config.height / 1.15) {
+        this.breath.destroy();
+        console.log('breath destroyed');
+        this.time.addEvent({delay: 200, callback: this.createBreath, callbackScope: this});
       }
     }
 
     if (this.currentPos > this.distance - 1) {
       this.onComplete();
     }
-
-    if (this.gameOver) {
-      this.onGameOver();
-    }
   }
 
   updateBreath() {
-    if (this.breathAmount !== 0) {
+    if (this.breathAmount > 0) {
       this.breathAmount -= 4;
       this.breath.y += this.breathSpeed;
-      if (this.breath.y > this.game.config.height) {
-        this.breath.destroy();
-        console.log('breath destroyed');
-        this.createBreath();
-      }
-    } else if (this.breathAmount === 0) {
-      this.gameOver = true;
+    } else if (this.breathAmount <= 0) {
+      this.onGameOver();
     }
   }
 
@@ -292,6 +295,18 @@ export default class GameScene extends Phaser.Scene {
   }
 
   updateMeterTxt() {
-    this.meterTxt.setText(`${this.distance - this.currentPos}M`);
+    this.meterTxt.setText(`${this.currentPos / 10}M`);
+  }
+
+  // Updaten van controles
+  updatePlayerControls() {
+    if (this.keyboard.left.isDown) {
+      this.moveForwardLeft();
+      this.handlePointerLeftBtn();
+    }
+    if (this.keyboard.right.isDown) {
+      this.moveForwardRight();
+      this.handlePointerRightBtn();
+    }
   }
 }

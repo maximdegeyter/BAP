@@ -73,10 +73,10 @@ export default class GameScene extends Phaser.Scene {
   countDown() {
     this.initialTime = 3;
 
-    // this.text = this.add.text(this.game.config.width / 2, this.game.config.height / 1.15, `${this.initialTime}`, {
-    //   fontSize: 48,
-    //   fill: `#ffffff`
-    // }).setOrigin(0.5);
+    this.text = this.add.text(this.game.config.width / 2, this.game.config.height / 1.15, `${this.initialTime}`, {
+      fontSize: 48,
+      fill: `#ffffff`
+    }).setOrigin(0.5);
 
     // elke seconde onEvent() oproepen
     this.timedEvent = this.time.addEvent({delay: 1000, callback: this.onEvent, callbackScope: this, repeat: 2});
@@ -86,10 +86,10 @@ export default class GameScene extends Phaser.Scene {
     if (this.initialTime > 1) {
       //countdown van 3 tot 0
       this.initialTime -= 1;
-      //this.text.setText(`${this.initialTime}`);
+      this.text.setText(`${this.initialTime}`);
     } else {
       //begin race als er afgeteld is
-      //this.destroyText();
+      this.destroyText();
       this.raceStarted = true;
       this.race();
     }

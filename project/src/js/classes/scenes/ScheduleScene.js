@@ -9,6 +9,7 @@ export default class ScheduleScene extends Phaser.Scene {
   init() {
     console.log(`Schedule scene`);
     this.selectDay = true;
+    this.photo = this.add.image(this.game.config.width / 2, this.game.config.height / 2.8143, 'pieter');
   }
 
   onComplete() {
@@ -17,7 +18,6 @@ export default class ScheduleScene extends Phaser.Scene {
   create() {
     this.createBackground();
     this.createNavBar();
-    this.createPhoto();
     this.createSelectedDay();
     this.createDays();
     this.nextBtn();
@@ -39,23 +39,21 @@ export default class ScheduleScene extends Phaser.Scene {
   }
 
   createSelectedDay() {
-    this.selectedDay = new Phaser.Geom.Rectangle((this.game.config.width / 2) - ((this.game.config.width / 7) / 2), 10, this.game.config.width / 7, 74);
+    this.selectedDay = new Phaser.Geom.Rectangle((this.game.config.width / 2) - ((this.game.config.width / 7) / 2), 10, this.game.config.width / 7, 80);
     this.dayGraphics = this.add.graphics({fillStyle: {color: 0xffffff}});
     this.dayGraphics.fillRectShape(this.selectedDay);
     this.stroke = this.add.graphics();
     this.stroke.lineStyle(2, 0x2a282b, 100);
-    this.stroke.strokeRect((this.game.config.width / 2) - ((this.game.config.width / 7) / 2), 10, this.game.config.width / 7, 74);
+    this.stroke.strokeRect((this.game.config.width / 2) - ((this.game.config.width / 7) / 2), 10, this.game.config.width / 7, 80);
   }
 
   createPhoto() {
     if (this.selectDay) {
-      this.photoPieter = new Phaser.Geom.Rectangle(0, 76, this.game.config.width, 300);
-      this.pieterGraphics = this.add.graphics({fillStyle: {color: 0x7c48f1}});
-      this.pieterGraphics.fillRectShape(this.photoPieter);
+      this.photo.destroy();
+      this.photo = this.add.image(this.game.config.width / 2, this.game.config.height / 2.8143, 'pieter');
     } else {
-      this.photoPieter = new Phaser.Geom.Rectangle(0, 76, this.game.config.width, 300);
-      this.pieterGraphics = this.add.graphics({fillStyle: {color: 0xa4f761}});
-      this.pieterGraphics.fillRectShape(this.photoPieter);
+      this.photo.destroy();
+      this.photo = this.add.image(this.game.config.width / 2, this.game.config.height / 3.06, 'emma');
     }
   }
 
@@ -112,13 +110,13 @@ export default class ScheduleScene extends Phaser.Scene {
   }
 
   nextBtn() {
-    this.nxtBtn = this.add.image(this.game.config.width - ((this.game.config.width / 7) / 2), 40, 'next').setInteractive();
+    this.nxtBtn = this.add.image(this.game.config.width - ((this.game.config.width / 7) / 2), 50, 'next').setInteractive();
     this.nxtBtn.setScale(0.3);
     this.nxtBtn.on('pointerdown', this.handleClickBtn, this);
   }
 
   prevBtn() {
-    this.nxtBtn = this.add.image((this.game.config.width / 7) / 2, 40, 'next').setInteractive();
+    this.nxtBtn = this.add.image((this.game.config.width / 7) / 2, 50, 'next').setInteractive();
     this.nxtBtn.setScale(0.3);
     this.nxtBtn.setAngle(180);
     this.nxtBtn.on('pointerdown', this.handleClickBtn, this);
@@ -158,6 +156,7 @@ export default class ScheduleScene extends Phaser.Scene {
       this.text4Nxt.setVisible(false);
       this.text5Nxt.setVisible(false);
       this.text6Nxt.setVisible(false);
+      this.messengerBtn.setAlpha(1);
     } else {
       this.text3.setVisible(false);
       this.text2.setVisible(false);
@@ -169,6 +168,7 @@ export default class ScheduleScene extends Phaser.Scene {
       this.text4Nxt.setVisible(true);
       this.text5Nxt.setVisible(true);
       this.text6Nxt.setVisible(true);
+      this.messengerBtn.setAlpha(0.5);
     }
   }
 

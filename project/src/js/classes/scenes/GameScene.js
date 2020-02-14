@@ -27,7 +27,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   onComplete() {
-    this.scene.start(`results`, {score: `${this.currentSeconds}:${this.currentMillis}`});
+    this.scene.start(`results`, {score: `${this.currentSeconds}.${this.currentMillis}`});
   }
 
   create() {

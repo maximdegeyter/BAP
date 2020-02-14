@@ -8,7 +8,7 @@ export default class ResultsScene extends Phaser.Scene {
 
   init(data) {
     console.log(`ResultsScene init`);
-    this.score = data.score;
+    this.score = parseInt(data.score);
     console.log(`Score: ${this.score}`);
   }
 

@@ -33,7 +33,6 @@ export default class GameScene extends Phaser.Scene {
   create() {
     this.createBackground();
     this.countDown();
-    this.createBreath();
     this.createMeterTxt();
     this.createPlayerControls();
   }
@@ -74,10 +73,10 @@ export default class GameScene extends Phaser.Scene {
   countDown() {
     this.initialTime = 3;
 
-    this.text = this.add.text(this.game.config.width / 2, this.game.config.height / 1.15, `${this.initialTime}`, {
-      fontSize: 48,
-      fill: `#ffffff`
-    }).setOrigin(0.5);
+    // this.text = this.add.text(this.game.config.width / 2, this.game.config.height / 1.15, `${this.initialTime}`, {
+    //   fontSize: 48,
+    //   fill: `#ffffff`
+    // }).setOrigin(0.5);
 
     // elke seconde onEvent() oproepen
     this.timedEvent = this.time.addEvent({delay: 1000, callback: this.onEvent, callbackScope: this, repeat: 2});
@@ -87,10 +86,10 @@ export default class GameScene extends Phaser.Scene {
     if (this.initialTime > 1) {
       //countdown van 3 tot 0
       this.initialTime -= 1;
-      this.text.setText(`${this.initialTime}`);
+      //this.text.setText(`${this.initialTime}`);
     } else {
       //begin race als er afgeteld is
-      this.destroyText();
+      //this.destroyText();
       this.raceStarted = true;
       this.race();
     }
@@ -107,6 +106,7 @@ export default class GameScene extends Phaser.Scene {
       this.createSwimmer();
       this.rightArmBtn();
       this.leftArmBtn();
+      this.createBreath();
 
       this.clockEvent = this.time.addEvent({delay: 1, callback: this.clockScore, callbackScope: this, loop: true});
     }
@@ -225,7 +225,7 @@ export default class GameScene extends Phaser.Scene {
   breathHit() {
     this.breath.destroy();
     this.breathAmount = 1000;
-    this.time.addEvent({delay: 1500, callback: this.createBreath, callbackScope: this, repeat: 0});
+    this.createBreath();
   }
 
   // progresstext van afstand
@@ -262,7 +262,7 @@ export default class GameScene extends Phaser.Scene {
 
   updateBreath() {
     if (this.breathAmount > 0) {
-      this.breathAmount -= 4;
+      this.breathAmount -= 5;
       this.breath.y += this.breathSpeed;
     } else if (this.breathAmount <= 0) {
       this.onGameOver();

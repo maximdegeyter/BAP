@@ -52,10 +52,11 @@ export default class ResultsScene extends Phaser.Scene {
   }
 
   createScoreChart() {
-    this.pieterChart = new Phaser.Geom.Rectangle(this.game.config.width / 5.9, this.game.config.height / 1.85, this.game.config.width / 7.5, - (2 * 44.48));
-    this.yourChart = new Phaser.Geom.Rectangle(this.game.config.width / 1.465, this.game.config.height / 1.85, this.game.config.width / 7.5, - (2 * this.score));
+    this.pieterChart = new Phaser.Geom.Rectangle(this.game.config.width / 5.9, this.game.config.height / 1.85, this.game.config.width / 7.5, - (44.48 * 2));
+    this.yourChart = new Phaser.Geom.Rectangle(this.game.config.width / 1.465, this.game.config.height / 1.85, this.game.config.width / 7.5, - (this.score * 2));
     this.graphics = this.add.graphics({fillStyle: {color: 0xffffff}});
-    this.graphics.fillRectShape(this.yourChart);
+    this.yourgraphics = this.add.graphics({fillStyle: {color: 0xffffff}});
+    this.yourgraphics.fillRectShape(this.yourChart);
     this.graphics.fillRectShape(this.pieterChart);
 
   }
